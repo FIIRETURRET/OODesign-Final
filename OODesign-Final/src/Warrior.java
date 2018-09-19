@@ -6,6 +6,7 @@ public class Warrior extends Fighter{
 	
 	public Warrior(int newRadius, int newx, int newy) {
 		description = "A Warrior";
+		type = "warrior";
 		health = 50;
 		speed = 2;
 		radius = newRadius;
@@ -28,9 +29,13 @@ public class Warrior extends Fighter{
 		
 	}
 
-	@Override
-	public void attack() {
+	public void attack(Fighter target) {
 		// TODO Auto-generated method stub
+		target.takeDamage(10);
+		System.out.println("Warrior attack");
+	}
+	
+	public void takeDamage(int damage) {
 		
 	}
 	
@@ -41,6 +46,7 @@ public class Warrior extends Fighter{
 		int ballMaxX = box.maxX - radius;
 		int ballMaxY = box.maxY - radius;
 		
+		// Movement
 		location = new Point(x,y);
 		Point targetPoint = target.getPoint();
 		// Check if the ball moves over the bounds. If so, adjust the position and speed.
@@ -76,6 +82,7 @@ public class Warrior extends Fighter{
 		else if(y == targetPoint.y) {
 			y = targetPoint.y;
 		}
+		
 	}
 	
 	/** Draw itself using the given graphics context. */

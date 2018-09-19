@@ -5,6 +5,7 @@ public abstract class Fighter {
 	
 	int health;
 	String description = "Unkown fighter";
+	String type;
 	int speed;
 	int radius;
 	int x;
@@ -30,8 +31,9 @@ public abstract class Fighter {
 	
 	public abstract void targetFighter();
 	public abstract void move();
-	public abstract void attack();
+	public abstract void attack(Fighter fighter);
 	public abstract void update(Fighter fighter, ContainerBox box);
 	public abstract void draw(Graphics g);
+	public abstract void takeDamage(int damage);
 
 }

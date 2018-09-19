@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.Array;
 import java.util.Random;
 import javax.swing.*;
 /**
@@ -111,6 +112,7 @@ public class BattleWorld extends JPanel {
       archer1.update(general.findClosestFighter(archer1), box);
       war2.update(general.findClosestFighter(war2), box);
       archer2.update(general.findClosestFighter(archer2), box);
+      
    }
    
    /** The custom drawing panel for the bouncing ball (inner class). */
