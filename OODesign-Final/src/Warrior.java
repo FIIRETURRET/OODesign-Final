@@ -1,15 +1,17 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 
 public class Warrior extends Fighter{
 	
 	public Warrior(int newRadius, int newx, int newy) {
 		description = "A Warrior";
 		health = 50;
-		speed = 20;
+		speed = 2;
 		radius = newRadius;
 		x = newx;
 		y = newy;
+		location = new Point(x,y);
 		localSearchSpace = 50;
 	}
 	
@@ -32,8 +34,48 @@ public class Warrior extends Fighter{
 		
 	}
 	
-	public void update() {
-		x +=1;
+	public void update(Fighter target, ContainerBox box) {
+		// Get the ball's bounds, offset by the radius of the ball
+		int ballMinX = box.minX + radius;
+		int ballMinY = box.minY + radius;
+		int ballMaxX = box.maxX - radius;
+		int ballMaxY = box.maxY - radius;
+		
+		location = new Point(x,y);
+		Point targetPoint = target.getPoint();
+		// Check if the ball moves over the bounds. If so, adjust the position and speed.
+		if (x < ballMinX) {
+		   x = ballMinX;     // Re-position the ball at the edge
+		   
+		} else if (x > ballMaxX) {
+		   x = ballMaxX;
+		}
+		else if(x < targetPoint.x) {
+			x += speed;
+		}
+		else if(x > targetPoint.x) {
+			x -= speed;
+		}
+		else if(x == targetPoint.x) {
+			x = targetPoint.x;
+		}
+		// May cross both x and y bounds
+		if (y < ballMinY) {
+			
+		   y = ballMinY;
+		} else if (y > ballMaxY) {
+		   
+		   y = ballMaxY;
+		}
+		else if(y < targetPoint.y) {
+			y += speed;
+		}
+		else if(y > targetPoint.y) {
+			y -= speed;
+		}
+		else if(y == targetPoint.y) {
+			y = targetPoint.y;
+		}
 	}
 	
 	/** Draw itself using the given graphics context. */

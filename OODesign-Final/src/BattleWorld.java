@@ -10,6 +10,11 @@ public class BattleWorld extends JPanel {
    
    private Fighter war1;		// A single warrior
    private Fighter archer1;		// A single Archer
+   private Fighter war2;
+   private Fighter archer2;
+   Fighter[] listOfFighters;
+   private General general;
+   
    private ContainerBox box;  // The container rectangular box
   
    private DrawCanvas canvas; // Custom canvas for drawing the box/ball
@@ -38,11 +43,19 @@ public class BattleWorld extends JPanel {
       
       // Init the warrior at a random location (inside the box)
       war1 = new Warrior(radius, x, y);
-      
+      x = rand.nextInt(canvasWidth - radius * 2 - 20) + radius + 10;
+      y = rand.nextInt(canvasHeight - radius * 2 - 20) + radius + 10;
+      war2 = new Warrior(radius, x, y);
       x = rand.nextInt(canvasWidth - radius * 2 - 20) + radius + 10;
       y = rand.nextInt(canvasHeight - radius * 2 - 20) + radius + 10;
       
       archer1 = new Archer(radius, x, y);
+      x = rand.nextInt(canvasWidth - radius * 2 - 20) + radius + 10;
+      y = rand.nextInt(canvasHeight - radius * 2 - 20) + radius + 10;
+      archer2 = new Archer(radius, x, y);
+      
+      listOfFighters = new Fighter[] {war1, archer1, war2, archer2};
+      general = new General(listOfFighters);
      
       // Init the Container Box to fill the screen
       box = new ContainerBox(0, 0, canvasWidth, canvasHeight, Color.BLACK, Color.WHITE);
@@ -94,8 +107,10 @@ public class BattleWorld extends JPanel {
     * Update the game objects, with proper collision detection and response.
     */
    public void gameUpdate() {
-      war1.update();
-      archer1.update();
+      war1.update(general.findClosestFighter(war1), box);
+      archer1.update(general.findClosestFighter(archer1), box);
+      war2.update(general.findClosestFighter(war2), box);
+      archer2.update(general.findClosestFighter(archer2), box);
    }
    
    /** The custom drawing panel for the bouncing ball (inner class). */
@@ -108,6 +123,8 @@ public class BattleWorld extends JPanel {
          box.draw(g);
          war1.draw(g);
          archer1.draw(g);
+         war2.draw(g);
+         archer2.draw(g);
          
          // Display ball's information
          g.setColor(Color.WHITE);

@@ -6,11 +6,11 @@ public abstract class Fighter {
 	int health;
 	String description = "Unkown fighter";
 	int speed;
-	Point location;
 	int radius;
 	int x;
 	int y;
 	int localSearchSpace;
+	Point location = new Point(x,y);
 	
 	public String getDescription() {
 		return description;
@@ -31,7 +31,7 @@ public abstract class Fighter {
 	public abstract void targetFighter();
 	public abstract void move();
 	public abstract void attack();
-	public abstract void update();
+	public abstract void update(Fighter fighter, ContainerBox box);
 	public abstract void draw(Graphics g);
 
 }
