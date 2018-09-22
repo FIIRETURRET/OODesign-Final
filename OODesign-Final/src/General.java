@@ -2,10 +2,13 @@ import java.awt.Point;
 
 public class General {
 	
-	Fighter[] fighterList;
+	Fighter[] warriorList;
+	Fighter[] archerList;
 	
-	public General(Fighter[] newfighterlist) {
-		fighterList = newfighterlist;
+	public General(Fighter[] newWarriorList, Fighter[] newArcherList) {
+		warriorList = newWarriorList;
+		archerList = newArcherList;
+		
 	}
 	
 	public Fighter findClosestFighter(Fighter fighter) {
@@ -15,17 +18,45 @@ public class General {
 		Point enemyPoint = new Point(10000,10000);
 		Fighter closestEnemy = null;
 		
-		for (int x = 0; x < fighterList.length; x++) {
-			if (fighterList[x] == fighter) {
-				// If our fighter in our list of fighters is the one we are dealing with, skip over it
-			}
-			else {
-				if (findDistanceBetweenPoints(fighter.getPoint(), fighterList[x].getPoint()) < findDistanceBetweenPoints(fighter.getPoint(), enemyPoint)){
+		// Check to see if we are dealing with a warrior or an archer
+		if(fighter.type == "warrior") {
+			// Run through the list of archers so see which is closest
+			for (int x = 0; x < archerList.length; x++) {
+				// Find the closest enemy by running though a list of all archers in the field
+				if (findDistanceBetweenPoints(fighter.getPoint(), archerList[x].getPoint()) < findDistanceBetweenPoints(fighter.getPoint(), fighter.getTargetPoint())) {
 					// if our new enemy is closer than our old enemy update the saved point and closestEnemy
-					enemyPoint = fighterList[x].getPoint();
-					closestEnemy = fighterList[x];
+					enemyPoint = archerList[x].getPoint();
+					closestEnemy = archerList[x];
+					fighter.setTarget(closestEnemy);
+					fighter.setTargetPoint(closestEnemy.getPoint());
+				}
+				// Otherwise keep the current target
+				else {
+					closestEnemy = fighter.getTarget();
+					enemyPoint = fighter.getTargetPoint();
+					fighter.setTarget(closestEnemy);
+					fighter.setTargetPoint(closestEnemy.getPoint());
 				}
 			}
+		}
+		else if (fighter.type == "archer") {
+			// Run through the list of archers so see which is closest
+			for (int x = 0; x < warriorList.length; x++) {
+				// Find the closest enemy by running though a list of all fighters in the field
+				if (findDistanceBetweenPoints(fighter.getPoint(), warriorList[x].getPoint()) < findDistanceBetweenPoints(fighter.getPoint(), fighter.getTargetPoint())) {
+					// if our new enemy is closer than our old enemy update the saved point and closestEnemy
+					enemyPoint = warriorList[x].getPoint();
+					closestEnemy = warriorList[x];
+				}
+				// Otherwise keep the current target
+				else {
+					closestEnemy = fighter.getTarget();
+					enemyPoint = fighter.getTargetPoint();
+				}
+			}
+		}
+		else {
+			
 		}
 		return closestEnemy;
 	}
@@ -39,9 +70,7 @@ public class General {
 	}
 	
 	public void update() {
-		for (int x=0; x<fighterList.length; x++) {
-			findClosestFighter(fighterList[x]);
-		}
+		
 	}
 
 }

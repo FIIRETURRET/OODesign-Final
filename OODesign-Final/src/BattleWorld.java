@@ -11,9 +11,10 @@ public class BattleWorld extends JPanel {
    
    private Fighter war1;		// A single warrior
    private Fighter archer1;		// A single Archer
-   private Fighter war2;
+   //private Fighter war2;
    private Fighter archer2;
-   Fighter[] listOfFighters;
+   Fighter[] listOfWarriors;
+   Fighter[] listOfArchers;
    private General general;
    
    private ContainerBox box;  // The container rectangular box
@@ -46,7 +47,7 @@ public class BattleWorld extends JPanel {
       war1 = new Warrior(radius, x, y);
       x = rand.nextInt(canvasWidth - radius * 2 - 20) + radius + 10;
       y = rand.nextInt(canvasHeight - radius * 2 - 20) + radius + 10;
-      war2 = new Warrior(radius, x, y);
+      //war2 = new Warrior(radius, x, y);
       x = rand.nextInt(canvasWidth - radius * 2 - 20) + radius + 10;
       y = rand.nextInt(canvasHeight - radius * 2 - 20) + radius + 10;
       
@@ -55,8 +56,11 @@ public class BattleWorld extends JPanel {
       y = rand.nextInt(canvasHeight - radius * 2 - 20) + radius + 10;
       archer2 = new Archer(radius, x, y);
       
-      listOfFighters = new Fighter[] {war1, archer1, war2, archer2};
-      general = new General(listOfFighters);
+      listOfWarriors = new Fighter[] {war1};
+      //listOfArchers = new Fighter[] {archer1};
+      //listOfWarriors = new Fighter[] {war1, war2};
+      listOfArchers = new Fighter[] {archer1, archer2};
+      general = new General(listOfWarriors, listOfArchers);
      
       // Init the Container Box to fill the screen
       box = new ContainerBox(0, 0, canvasWidth, canvasHeight, Color.BLACK, Color.WHITE);
@@ -110,7 +114,7 @@ public class BattleWorld extends JPanel {
    public void gameUpdate() {
       war1.update(general.findClosestFighter(war1), box);
       archer1.update(general.findClosestFighter(archer1), box);
-      war2.update(general.findClosestFighter(war2), box);
+      //war2.update(general.findClosestFighter(war2), box);
       archer2.update(general.findClosestFighter(archer2), box);
       
    }
@@ -125,7 +129,7 @@ public class BattleWorld extends JPanel {
          box.draw(g);
          war1.draw(g);
          archer1.draw(g);
-         war2.draw(g);
+         //war2.draw(g);
          archer2.draw(g);
          
          // Display ball's information
