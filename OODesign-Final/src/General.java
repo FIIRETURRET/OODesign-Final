@@ -12,10 +12,14 @@ public class General {
 	}
 	
 	public Fighter findClosestFighter(Fighter fighter) {
-		// Get position of current fighter
-		Point fighterPos = fighter.getPoint();
-		// Set the first point rediculously far away
-		Point enemyPoint = new Point(10000,10000);
+		Point enemyPoint;
+		// Check to see if the fighter already has a target
+		if (fighter.getTarget() == null) {
+			// Set the first point ridiculously far away
+			enemyPoint = new Point(10000,10000);
+		} else {
+			enemyPoint = fighter.getTargetPoint();
+		}
 		Fighter closestEnemy = null;
 		
 		// Check to see if we are dealing with a warrior or an archer
@@ -27,15 +31,11 @@ public class General {
 					// if our new enemy is closer than our old enemy update the saved point and closestEnemy
 					enemyPoint = archerList[x].getPoint();
 					closestEnemy = archerList[x];
-					fighter.setTarget(closestEnemy);
-					fighter.setTargetPoint(closestEnemy.getPoint());
 				}
 				// Otherwise keep the current target
 				else {
 					closestEnemy = fighter.getTarget();
 					enemyPoint = fighter.getTargetPoint();
-					fighter.setTarget(closestEnemy);
-					fighter.setTargetPoint(closestEnemy.getPoint());
 				}
 			}
 		}

@@ -14,6 +14,7 @@ public class Warrior extends Fighter{
 		y = newy;
 		location = new Point(x,y);
 		localSearchSpace = 50;
+		Fighter target = null;
 	}
 	
 	// Find the closest Archer
